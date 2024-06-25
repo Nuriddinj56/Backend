@@ -1,12 +1,19 @@
 require('dotenv').config
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const mongoose = require('mongoose');
+const requireTime = require('./middlewares/request-time');
 
 const app = express();
+
 app.use(express.json());
+app.use(express.static('static'))
+app.use(fileUpload({}))
+app.use(requireTime)
 
 // Router
 app.use('/api/post',require('./router/post.route'))
+app.use('/api/auth', require('./router/auth.router'))
 
 const DB_URL =
  'mongodb+srv://nuri93j:JRZRa94Ad24ZBPIk@nube.dqwnabw.mongodb.net/?retryWrites=true&w=majority&appName=nube';
